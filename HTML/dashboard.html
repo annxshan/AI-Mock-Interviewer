@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interview Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/dashboard.css">
+  
+</head>
+<body>
+  <div id="dashboard-container">
+    <!-- User Customizable Header Nav -->
+    <nav id="main-header-nav">
+          <a href="index.html" class="main-cta">
+        <svg xmlns="http://www.w3.org/2000/svg" width="0" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;"></svg>
+        Home
+      </a>
+    </nav>
+
+    <div class="app-nav">
+      <div class="nav-title">
+        <h1>Interview Dashboard</h1>
+        <p>Track your progress</p>
+      </div>
+      <a href="interview.html" class="main-cta">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        New Interview
+      </a>
+    </div>
+
+    <div class="dashboard-content">
+        <section class="stats-grid">
+          <div class="stat-card">
+            <p>Total Interviews</p>
+            <span id="total-interviews" class="stat-value">0</span>
+          </div>
+          <div class="stat-card">
+            <p>Questions Answered</p>
+            <span id="total-questions" class="stat-value">0</span>
+          </div>
+          <div class="stat-card">
+            <p>Avg. Response Time</p>
+            <span id="avg-response-time" class="stat-value">-</span>
+          </div>
+        </section>
+
+        <section class="history-section">
+          <div class="history-header">
+            <h2>Recent History</h2>
+          </div>
+          <div id="history-container"></div>
+        </section>
+    </div>
+  </div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDc9q_RzqRblwTTbz1I_HCy4ikQ4_T7FV4",
+    authDomain: "ai-interviewer-9802e.firebaseapp.com",
+    projectId: "ai-interviewer-9802e",
+    storageBucket: "ai-interviewer-9802e.firebasestorage.app",
+    messagingSenderId: "40902420294",
+    appId: "1:40902420294:web:a01a07d878d46df6f7e747",
+    measurementId: "G-XWH432EKQM"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// Sync dashboard with real user data (same as index.html)
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        const profile = {
+            uid: user.uid,
+            displayName: user.displayName || "",
+            email: user.email || "",
+            name: user.displayName || (user.email ? user.email.split("@")[0] : "")
+        };
+        
+        // Store same as index
+        localStorage.setItem("ai_user_profile", JSON.stringify(profile));
+
+        // Prefill dashboard modal
+        const nameEl = document.getElementById("fb-name-dashboard");
+        const emailEl = document.getElementById("fb-email-dashboard");
+
+        if (nameEl) nameEl.value = profile.name;
+        if (emailEl) emailEl.value = profile.email;
+    } else {
+        // Signed out: clear local copy
+        localStorage.removeItem("ai_user_profile");
+    }
+});
+</script>
+
+
+  <script>
+    
+    document.addEventListener('DOMContentLoaded', displayDashboardData);
+
+    function displayDashboardData() {
+      const history = JSON.parse(localStorage.getItem('ai_interviewer_data') || '[]');
+      
+      // --- Stats Calculation ---
+      const total = history.length;
+      const totalQs = history.reduce((sum, r) => sum + (parseInt(r.metrics?.qCount) || 0), 0);
+      const validTimes = history
+          .map(r => parseFloat(r.metrics?.avgResponse || 0))
+          .filter(t => t > 0);
+      const avgTime = validTimes.length > 0 
+          ? (validTimes.reduce((a, b) => a + b, 0) / validTimes.length).toFixed(1) 
+          : null;
+
+      document.getElementById('total-interviews').textContent = total;
+      document.getElementById('total-questions').textContent = totalQs;
+      document.getElementById('avg-response-time').textContent = avgTime ? `${avgTime}s` : '-';
+
+      // --- Populate History ---
+      const historyContainer = document.getElementById('history-container');
+      historyContainer.innerHTML = '';
+
+      if (total === 0) {
+        historyContainer.innerHTML = `
+            <div style="text-align: center; padding: 3rem; color: var(--text-light); background: var(--background); border-radius: 12px; border: 2px dashed var(--border-light); display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+                <p style="margin-bottom: 1rem; font-size: 1.1rem;">No interviews yet.</p>
+                <a href="interview.html" class="main-cta">Start Your First Interview</a>
+            </div>
+        `;
+        return;
+      }
+
+      history.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+      history.forEach(report => {
+        const item = document.createElement('div');
+        item.className = 'history-item';
+        
+        const dateObj = new Date(report.date);
+        const dateStr = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        const timeStr = dateObj.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+        item.innerHTML = `
+          <div class="history-item-info">
+            <p class="role">${report.role}</p>
+            <div class="stats-mini">
+                <span>${report.metrics.qCount} questions</span> • 
+                <span>${report.metrics.duration} duration</span>
+            </div>
+            <p class="date">${dateStr} at ${timeStr}</p>
+          </div>
+          <button class="view-report-btn" data-id="${report.id}">View Report</button>
+        `;
+
+        item.querySelector('.view-report-btn').addEventListener('click', (e) => {
+          const reportId = e.target.getAttribute('data-id');
+          sessionStorage.setItem('view_report_id', reportId);
+          window.location.href = 'interview.html';
+        });
+
+        historyContainer.appendChild(item);
+      });
+    }
+  </script>
+  
+<footer class="footer-section">
+
+    <div class="footer-download">
+        <p>FOLLOW US</p>
+    </div>
+
+    <div class="footer-social-icons">
+
+        <!-- Instagram SVG directly inside the <a> -->
+        <a href="https://www.instagram.com/annxshan?igsh=cThmbGdmZGY5NTR6" target="_blank" class="social-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                 stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+        </a>
+
+        <!-- Discord-->
+    <a href="https://discord.com/users/757266514331041843" target="_blank" class="social-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
+            <path d="M20 4a16 16 0 0 0-4-1l-1 2a14 14 0 0 0-6 0l-1-2a16 16 0 0 0-4 1c-2 3-3 7-3 11a16 16 0 0 0 6 3l1-2a10 10 0 0 1-2-1l.5-.5a11 11 0 0 0 11 0l.5.5a10 10 0 0 1-2 1l1 2a16 16 0 0 0 6-3c0-4-1-8-3-11ZM9.5 14c-.8 0-1.5-.9-1.5-2s.7-2 1.5-2 1.5.9 1.5 2-.7 2-1.5 2Zm5 0c-.8 0-1.5-.9-1.5-2s.7-2 1.5-2 1.5.9 1.5 2-.7 2-1.5 2Z"/>
+        </svg>
+    </a>
+
+        <!-- GitHub -->
+    <a href="https://github.com/annxshan" target="_blank" class="social-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
+            <path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6a3.1 3.1 0 0 0-1.3-1.7c-1-.7.1-.7.1-.7a2.4 2.4 0 0 1 1.8 1.2 2.5 2.5 0 0 0 3.4 1 2.5 2.5 0 0 1 .7-1.6c-2.7-.3-5.6-1.4-5.6-6.2a4.8 4.8 0 0 1 1.3-3.3 4.4 4.4 0 0 1 .1-3.2s1-.3 3.3 1.3a11.4 11.4 0 0 1 6 0c2.3-1.6 3.3-1.3 3.3-1.3a4.4 4.4 0 0 1 .1 3.2A4.8 4.8 0 0 1 20 12c0 4.8-2.9 5.9-5.6 6.2a2.7 2.7 0 0 1 .8 2v3c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z"/>
+        </svg>
+    </a>
+
+    </div>
+
+    <div class="footer-feedback">
+  <a href="#" id="open-feedback" class="feedback-btn">Send Feedback</a>
+</div>
+
+
+</footer>
+
+<!-- VALORANT-STYLE FEEDBACK MODAL (replace existing feedback modal block) -->
+<div id="feedback-modal" class="feedback-modal hidden" aria-hidden="true">
+  <div class="feedback-backdrop"></div>
+
+  <div class="feedback-panel valorant-card" role="dialog" aria-modal="true" aria-labelledby="feedback-title">
+    <button id="feedback-close" class="feedback-close" title="Close" aria-label="Close">&times;</button>
+
+    <div class="vf-header">
+      <div class="vf-badge" aria-hidden="true">
+        <!-- angular tech icon -->
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 21l9-18 9 18H3z"></path>
+        </svg>
+      </div>
+      <div class="vf-title-block">
+        <h3 id="feedback-title">Send Feedback</h3>
+        <p class="vf-sub">We read every message. Honest feedback only.</p>
+      </div>
+    </div>
+
+    <form id="feedback-form" class="vf-form" aria-describedby="fb-status">
+      <div class="vf-row">
+        <label class="vf-label">Name
+          <input id="fb-name-dashboard" name="name" type="text" readonly />
+        </label>
+
+        <label class="vf-label">Email
+          <input id="fb-email-dashboard" name="email" type="email" readonly />
+        </label>
+      </div>
+
+      <label class="vf-label">Message
+        <textarea id="fb-message" name="message" rows="6" placeholder="Tell us what you think..." required></textarea>
+      </label>
+
+      <div class="feedback-actions vf-actions">
+        <button type="submit" id="fb-send" class="btn vf-btn">Send</button>
+        <button type="button" id="fb-cancel" class="btn vf-btn-secondary">Cancel</button>
+      </div>
+
+      <div id="fb-status" class="fb-status vf-status" aria-live="polite"></div>
+    </form>
+  </div>
+</div>
+
+<script>
+
+
+/* Universal feedback wiring for dashboard.html
+   Handles both #open-feedback and #open-feedback-dashboard and their modals/forms.
+   Uses EmailJS REST API. Update service/template/user IDs if you change them. */
+(function () {
+  const CONFIG = {
+    service_id: 'service_akynspd',
+    template_id: 'template_2u6b9i9',
+    user_id: 'KFHSBsY_sCQlYjltB',
+    api_url: 'https://api.emailjs.com/api/v1.0/email/send'
+  };
+
+  // Utility: hook a modal (open button id, modal id, form id)
+  function wireModal(opts) {
+    const { openBtnId, modalId, closeBtnSelector, formId, nameId, emailId, messageId, statusId, sendBtnId, cancelBtnSelector } = opts;
+    const openBtn = document.getElementById(openBtnId);
+    const modal = document.getElementById(modalId);
+    if (!modal) return; // modal not on page
+
+    const closeBtn = modal.querySelector(closeBtnSelector) || modal.querySelector('.feedback-close');
+    const form = document.getElementById(formId);
+    const nameEl = document.getElementById(nameId);
+    const emailEl = document.getElementById(emailId);
+    const messageEl = document.getElementById(messageId);
+    const statusEl = document.getElementById(statusId);
+    const sendBtn = document.getElementById(sendBtnId);
+    const cancelBtn = modal.querySelector(cancelBtnSelector);
+
+    function openModal(e) {
+      if (e) e.preventDefault();
+      modal.classList.remove('hidden');
+      // prefill from localStorage if available
+      try {
+        const profile = JSON.parse(localStorage.getItem('ai_user_profile') || '{}');
+        if (profile) {
+          if (nameEl && !nameEl.value) nameEl.value = profile.name || profile.displayName || '';
+          if (emailEl && !emailEl.value) emailEl.value = profile.email || '';
+        }
+      } catch (err) {}
+      if (messageEl) messageEl.focus();
+    }
+
+    function closeModal() {
+      modal.classList.add('hidden');
+      if (statusEl) statusEl.textContent = '';
+      if (messageEl) messageEl.value = '';
+    }
+
+    // open button
+    if (openBtn) openBtn.addEventListener('click', openModal);
+
+    // close button
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+    // cancel (if provided)
+    if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+
+    // backdrop click
+    modal.addEventListener('click', (ev) => {
+      if (ev.target === modal || ev.target.classList.contains('feedback-backdrop')) closeModal();
+    });
+
+    // esc key
+    document.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
+    });
+
+    // form submit handler
+    if (form) {
+      form.addEventListener('submit', async (ev) => {
+        ev.preventDefault();
+        if (!messageEl) return;
+
+        statusEl.textContent = '';
+        const message = messageEl.value.trim();
+        if (!message) {
+          statusEl.textContent = 'Please write a message.';
+          messageEl.focus();
+          return;
+        }
+
+        if (sendBtn) {
+          sendBtn.disabled = true;
+          sendBtn.textContent = 'Sending...';
+        }
+
+        const payload = {
+          service_id: CONFIG.service_id,
+          template_id: CONFIG.template_id,
+          user_id: CONFIG.user_id,
+          template_params: {
+            from_name: nameEl ? (nameEl.value || 'Anonymous') : 'Anonymous',
+            from_email: emailEl ? (emailEl.value || 'unknown@example.com') : 'unknown@example.com',
+            message: message
+          }
+        };
+
+        try {
+          const res = await fetch(CONFIG.api_url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          if (!res.ok) {
+            const text = await res.text().catch(()=>res.statusText);
+            throw new Error(`EmailJS API ${res.status} - ${text}`);
+          }
+
+          statusEl.textContent = 'Thanks — your feedback has been sent.';
+          messageEl.value = '';
+          setTimeout(closeModal, 1100);
+        } catch (err) {
+          console.error('Feedback send error:', err);
+          let hint = '';
+          if (!navigator.onLine) hint = ' You appear offline.';
+          else if (/403|unauthor/i.test(err.message)) hint = ' Check Service / Template / User IDs.';
+          statusEl.textContent = 'Error sending feedback.' + hint;
+        } finally {
+          if (sendBtn) {
+            sendBtn.disabled = false;
+            sendBtn.textContent = 'Send';
+          }
+        }
+      });
+    }
+  }
+
+  // Wire the valorant modal (id names from your dashboard.html)
+  wireModal({
+    openBtnId: 'open-feedback',                 // footer button (index-style)
+    modalId: 'feedback-modal',                  // valorant modal id
+    closeBtnSelector: '#feedback-close',
+    formId: 'feedback-form',
+    nameId: 'fb-name',
+    emailId: 'fb-email',
+    messageId: 'fb-message',
+    statusId: 'fb-status',
+    sendBtnId: 'fb-send',
+    cancelBtnSelector: '#fb-cancel'
+  });
+
+  // Wire the dashboard-specific modal if present
+  wireModal({
+    openBtnId: 'open-feedback-dashboard',       // dashboard footer button
+    modalId: 'feedback-modal-dashboard',
+    closeBtnSelector: '#feedback-close-dashboard',
+    formId: 'feedback-form-dashboard',
+    nameId: 'fb-name-dashboard',
+    emailId: 'fb-email-dashboard',
+    messageId: 'fb-message-dashboard',
+    statusId: 'fb-status-dashboard',
+    sendBtnId: 'fb-send-dashboard',
+    cancelBtnSelector: '#fb-cancel-dashboard'
+  });
+
+})();
+</script>
+
+
+    </body>
+    </html>

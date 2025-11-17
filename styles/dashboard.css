@@ -1,0 +1,597 @@
+
+    /* --- 1. Design Tokens --- */
+    :root {
+        --primary: #1564dc;
+        --primary-dark: #134da9;
+        --background: #f8f9fa;
+        --card: #ffffff;
+        --text-dark: #1a1a1a;
+        --text-light: #495057;
+        --border-light: #e9ecef;
+        --danger: #dc2626;
+        --success: #10b981;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    /* --- 2. Base Styles --- */
+    body {
+        background-color: var(--background);
+        color: var(--text-dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    #dashboard-container {
+        width: 100%;
+        max-width: 1100px;
+        height: 95vh;
+        max-height: 850px;
+        display: flex;
+        flex-direction: column;
+        background: var(--card);
+        border-radius: 16px;
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--border-light);
+        overflow: hidden;
+    }
+
+    /* --- 3. Header/Nav --- */
+    /* Main App Navigation */
+    .app-nav {
+        padding: 1rem 2rem;
+        border-bottom: 1px solid var(--border-light);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-shrink: 0;
+        background: #fff;
+    }
+    .nav-title h1 {
+        font-size: 1.5rem;
+        font-weight: 800;
+        margin: 0;
+        color: var(--primary);
+        letter-spacing: -0.02em;
+    }
+    .nav-title p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: var(--text-light);
+    }
+
+    /* Placeholder for user's custom header items */
+    #main-header-nav {
+        background: var(--background);
+        padding: 0.5rem 2rem;
+        border-bottom: 1px solid var(--border-light);
+        min-height: 40px; /* Visible height even when empty */
+        display: flex;
+        align-items: center;
+    }
+
+    /* --- 4. Buttons (Standardized) --- */
+    .main-cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--primary);
+        color: white;
+        font-weight: 600;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-size: 0.95rem;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 4px rgba(21, 100, 220, 0.2);
+    }
+    .main-cta:hover {
+        background: var(--primary-dark);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(21, 100, 220, 0.3);
+    }
+
+    /* --- 5. Dashboard Content --- */
+    .dashboard-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 2rem;
+        overflow-y: auto;
+        gap: 2rem;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        flex-shrink: 0;
+    }
+    .stat-card {
+        background: var(--background);
+        border: 1px solid var(--border-light);
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        box-shadow: var(--shadow-sm);
+    }
+    .stat-card p {
+        margin: 0 0 0.5rem 0;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-light);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .stat-card .stat-value {
+        font-size: 3rem;
+        font-weight: 800;
+        color: var(--primary);
+        line-height: 1;
+    }
+
+    .history-section {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+    }
+    .history-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--border-light);
+    }
+    .history-header h2 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin: 0;
+    }
+
+    #history-container {
+        flex: 1;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding-right: 5px;
+    }
+    .history-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: var(--card);
+        border: 1px solid var(--border-light);
+        padding: 1.25rem;
+        border-radius: 12px;
+        transition: all 0.2s ease;
+        box-shadow: var(--shadow-sm);
+    }
+    .history-item:hover {
+        border-color: var(--primary);
+        box-shadow: var(--shadow-md);
+        transform: translateY(-2px);
+    }
+    .history-item-info p { margin: 0; }
+    .history-item-info .role {
+        font-weight: 700;
+        font-size: 1.05rem;
+        color: var(--primary);
+        margin-bottom: 0.25rem;
+    }
+    .history-item-info .stats-mini {
+        font-size: 0.85rem;
+        color: var(--text-dark);
+        margin-bottom: 0.25rem;
+        display: flex;
+        gap: 1rem;
+    }
+    .history-item-info .date {
+        font-size: 0.85rem;
+        color: var(--text-light);
+    }
+    
+    .view-report-btn {
+        background: transparent;
+        color: var(--text-light);
+        border: 1px solid var(--border-light);
+        border-radius: 8px;
+        padding: 8px 16px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    .view-report-btn:hover {
+        background: var(--background);
+        color: var(--primary);
+        border-color: var(--primary);
+    }
+
+    /* Scrollbar styling */
+    #history-container::-webkit-scrollbar { width: 6px; }
+    #history-container::-webkit-scrollbar-track { background: transparent; }
+    #history-container::-webkit-scrollbar-thumb { background-color: var(--border-light); border-radius: 20px; }
+    #history-container:hover::-webkit-scrollbar-thumb { background-color: var(--text-light); }
+
+
+
+    .footer-section {
+    background: #0f0f0f;
+    padding: 40px 0;
+    text-align: center;
+    color: #fff;
+    margin-top: 60px;
+}
+
+.footer-download p {
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+.footer-social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-bottom: 30px;
+}
+
+.social-icon {
+    background: #1e1e1e;
+    padding: 10px;
+    border-radius: 12px;
+    display: flex;
+    width: 42px;
+    height: 42px;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+
+.social-icon:hover {
+    background: #333;
+}
+
+.social-icon img {
+    width: 22px;
+    height: 22px;
+}
+
+.feedback-btn {
+    display: inline-block;
+    background: #ffffff;
+    color: #000;
+    padding: 12px 22px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.feedback-btn:hover {
+    background: #ddd;
+}
+
+/* ===== Valorant-style Feedback Modal ===== */
+:root{
+  --vf-bg: #0b0b0d;
+  --vf-panel: linear-gradient(180deg, #0f0f11 0%, #0b0b0d 100%);
+  --vf-accent: #ff2b2b;   /* primary red */
+  --vf-accent-2: #ff6b6b; /* glow */
+  --vf-muted: #9aa0a6;
+  --vf-glass: rgba(255,255,255,0.03);
+}
+
+/* overlay/backdrop */
+.feedback-modal { position: fixed; inset: 0; z-index: 1200; display:flex; align-items:center; justify-content:center; }
+.feedback-modal.hidden { display:none; }
+.feedback-backdrop {
+  position: absolute; inset:0;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.85) 100%);
+  backdrop-filter: blur(4px) saturate(1.1);
+}
+
+/* panel */
+.feedback-panel.valorant-card {
+  position: relative;
+  width: 640px;
+  max-width: calc(100% - 32px);
+  border-radius: 12px;
+  padding: 18px;
+  box-sizing: border-box;
+  background: var(--vf-panel);
+  box-shadow:
+    0 6px 24px rgba(0,0,0,0.65),
+    inset 0 1px 0 rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.03);
+  transform: translateY(8px);
+  animation: vf-pop .16s cubic-bezier(.2,.9,.3,1);
+  overflow: hidden;
+}
+
+/* header */
+.vf-header { display:flex; gap:12px; align-items:center; margin-bottom:8px; }
+.vf-badge {
+  width:44px; height:44px; border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  background: linear-gradient(180deg,#121214,#0b0b0d);
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 4px 18px rgba(255,43,43,0.06), 0 0 18px rgba(255,107,107,0.02);
+  color: var(--vf-accent);
+}
+.vf-title-block h3{ margin:0; font-size:1.15rem; color:#fff; font-weight:700; letter-spacing:0.2px; }
+.vf-sub{ margin:0; font-size:0.8rem; color:var(--vf-muted); }
+
+/* close */
+.feedback-close {
+  position:absolute; right:12px; top:10px; z-index:3;
+  width:36px; height:36px; border-radius:8px; border:none; cursor:pointer;
+  background: transparent; color: #ddd; font-size:20px; line-height:1;
+  transition: transform .12s ease, background .12s ease;
+}
+.feedback-close:hover { transform: scale(1.05); background: rgba(255,255,255,0.02); }
+
+/* form layout */
+.vf-form { display:block; margin-top:6px; }
+.vf-row { display:flex; gap:12px; }
+.vf-label { display:flex; flex-direction:column; gap:8px; color:var(--vf-muted); font-size:13px; flex:1; }
+.vf-label input, .vf-label textarea {
+  width:100%; padding:10px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.04);
+  background: rgba(255,255,255,0.02); color:#fff; font-size:14px; outline:none;
+  transition: box-shadow .12s ease, border-color .12s ease, transform .12s ease;
+}
+.vf-label input[readonly] { opacity:0.8; color:#ddd; cursor:default; }
+
+/* focus */
+.vf-label input:focus, .vf-label textarea:focus {
+  border-color: rgba(255,43,43,0.95);
+  box-shadow: 0 6px 20px rgba(255,43,43,0.06), 0 0 24px rgba(255,107,107,0.02);
+  transform: translateY(-1px);
+}
+
+/* textarea */
+.vf-label textarea { min-height:140px; resize:vertical; }
+
+/* actions */
+.vf-actions { display:flex; gap:10px; justify-content:flex-end; align-items:center; margin-top:12px; }
+.vf-btn {
+  background: linear-gradient(180deg, var(--vf-accent) 0%, #d11a1a 100%);
+  color:#fff; padding:10px 16px; border-radius:8px; border:none; cursor:pointer; font-weight:700;
+  box-shadow: 0 6px 20px rgba(255,43,43,0.12), 0 0 14px rgba(255,107,107,0.04);
+  transition: transform .12s ease, filter .12s ease;
+}
+.vf-btn:active { transform: translateY(1px) scale(.995); }
+.vf-btn[disabled] { opacity:0.65; cursor:not-allowed; transform:none; box-shadow:none; filter:grayscale(.15); }
+
+.vf-btn-secondary {
+  background: transparent; color:var(--vf-muted); border:1px solid rgba(255,255,255,0.04); padding:9px 14px;
+}
+
+/* status text */
+.vf-status { margin-top:10px; color: #e6e6e6; font-size:13px; min-height:18px; }
+
+/* subtle animated red accent line at bottom */
+.feedback-panel.valorant-card::after{
+  content:""; position:absolute; left:0; right:0; bottom:0; height:6px;
+  background: linear-gradient(90deg, transparent, rgba(255,43,43,0.85), transparent);
+  filter: blur(6px);
+  opacity:0.95;
+  transform: translateY(6px);
+  transition: transform .18s ease;
+}
+.feedback-panel.valorant-card:hover::after{ transform: translateY(0); }
+
+/* pop animation */
+@keyframes vf-pop { from{ opacity:0; transform: translateY(16px) scale(.995);} to{ opacity:1; transform: translateY(0) scale(1);} }
+
+/* responsive */
+@media (max-width:640px) {
+  .feedback-panel.valorant-card { width: 92%; padding:14px; border-radius:10px; }
+  .vf-row { flex-direction:column; }
+  .vf-badge { display:none; }
+}
+
+
+/* ===== Full Valorant-style CSS for Dashboard (paste into your stylesheet) ===== */
+
+/* Palette */
+:root {
+  --vf-bg: #0b0b0d;
+  --vf-panel-top: #0f0f11;
+  --vf-panel-bot: #0b0b0d;
+  --vf-accent: #ff2b2b;
+  --vf-accent-2: #ff6b6b;
+  --vf-muted: #9aa0a6;
+  --vf-white-90: rgba(255,255,255,0.92);
+  --vf-glass: rgba(255,255,255,0.03);
+}
+
+/* ---------- Generic modal overlay ---------- */
+.feedback-modal,
+#feedback-modal-dashboard {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.feedback-modal.hidden,
+#feedback-modal-dashboard.hidden { display: none; }
+
+.feedback-backdrop {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.85) 100%);
+  backdrop-filter: blur(4px) saturate(1.05);
+}
+
+/* ---------- Valorant card panel (applies to .feedback-panel) ---------- */
+.feedback-panel,
+.feedback-panel.valorant-card {
+  position: relative;
+  width: 640px;
+  max-width: calc(100% - 40px);
+  border-radius: 12px;
+  padding: 18px;
+  box-sizing: border-box;
+  background: linear-gradient(180deg, var(--vf-panel-top) 0%, var(--vf-panel-bot) 100%);
+  color: #fff;
+  box-shadow:
+    0 10px 40px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(255,255,255,0.02);
+  border: 1px solid rgb(255, 255, 255);
+  transform: translateY(8px);
+  animation: vf-pop .16s cubic-bezier(.2,.9,.3,1);
+  overflow: hidden;
+}
+
+/* subtle glowing red accent at bottom */
+.feedback-panel::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 6px;
+  background: linear-gradient(90deg, transparent, rgba(255,43,43,0.85), transparent);
+  filter: blur(6px);
+  opacity: 0.95;
+  transform: translateY(6px);
+  transition: transform .18s ease;
+}
+.feedback-panel:hover::after { transform: translateY(0); }
+
+/* ---------- Header inside modal ---------- */
+.vf-header { display:flex; gap:12px; align-items:center; margin-bottom:8px; }
+.vf-badge {
+  width:44px; height:44px; border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  background: linear-gradient(180deg,#121214,#0b0b0d);
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 4px 18px rgba(255,43,43,0.06), 0 0 18px rgba(255,107,107,0.02);
+  color: var(--vf-accent);
+}
+.vf-title-block h3 { margin:0; font-size:1.15rem; color:#fff; font-weight:700; letter-spacing:0.2px; }
+.vf-sub { margin:0; font-size:0.8rem; color:var(--vf-muted); }
+
+/* ---------- Close button ---------- */
+.feedback-close,
+#feedback-close-dashboard {
+  position:absolute; right:12px; top:10px; z-index:3;
+  width:36px; height:36px; border-radius:8px; border:none; cursor:pointer;
+  background: transparent; color: #ddd; font-size:20px; line-height:1;
+  transition: transform .12s ease, background .12s ease;
+}
+.feedback-close:hover,
+#feedback-close-dashboard:hover { transform: scale(1.05); background: rgba(255,255,255,0.02); }
+
+/* form layout */
+.vf-form { display:block; margin-top:6px; }
+.vf-row { display:flex; gap:12px; }
+.vf-label { display:flex; flex-direction:column; gap:8px; color:var(--vf-muted); font-size:13px; flex:1; }
+.vf-label input, 
+.vf-label textarea {
+  width:100%; padding:10px 4px; border-radius:8px; border:1px solid rgba(255,255,255,0.04);
+  background: rgba(255,255,255,0.02); color:#fff; font-size:14px; outline:none;
+  transition: box-shadow .12s ease, border-color .12s ease, transform .12s ease;
+}
+.vf-label input[readonly] { opacity:0.8; color:#ddd; cursor:default; }
+
+/* focus styles */
+.vf-label input:focus, .vf-label textarea:focus, #fb-message-dashboard:focus {
+  border-color: rgba(255,43,43,0.95);
+  box-shadow: 0 6px 20px rgba(255,43,43,0.06), 0 0 24px rgba(255,107,107,0.02);
+  transform: translateY(-1px);
+}
+
+/* textarea specifics */
+.vf-label textarea {
+    width: 100%;
+    min-height: 140px;
+    resize: vertical;
+
+    background: rgba(255, 255, 255, 0.02);
+    color: #fff;
+    font-size: 14px;
+
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 8px;
+
+    padding: 10px 2px;
+    outline: none;
+
+    transition: border 0.25s ease, box-shadow 0.25s ease, transform 0.15s ease;
+}
+ #fb-message-dashboard { min-height:140px; resize:vertical; }
+
+/* ---------- Action buttons ---------- */
+.vf-actions,
+.feedback-actions,
+#feedback-form-dashboard .feedback-actions { display:flex; gap:10px; justify-content:flex-end; align-items:center; margin-top:12px; }
+.vf-btn,
+#fb-send-dashboard,
+#fb-send { 
+  background: linear-gradient(180deg, var(--vf-accent) 0%, #d11a1a 100%);
+  color:#fff; padding:10px 16px; border-radius:8px; border:none; cursor:pointer; font-weight:700;
+  box-shadow: 0 6px 20px rgba(255,43,43,0.12), 0 0 14px rgba(255,107,107,0.04);
+  transition: transform .12s ease, filter .12s ease;
+}
+.vf-btn:active,
+#fb-send:active,
+#fb-send-dashboard:active { transform: translateY(1px) scale(.995); }
+.vf-btn[disabled], #fb-send[disabled], #fb-send-dashboard[disabled] { opacity:0.65; cursor:not-allowed; transform:none; box-shadow:none; filter:grayscale(.15); }
+
+.vf-btn-secondary, .btn.btn-secondary, #fb-cancel-dashboard {
+  background: transparent; color:var(--vf-muted); border:1px solid rgba(255,255,255,0.04); padding:9px 14px; border-radius:8px;
+}
+
+/* status text */
+.vf-status, #fb-status-dashboard, .fb-status { margin-top:10px; color: #e6e6e6; font-size:13px; min-height:18px; }
+
+/* ---------- Footer button styling to match Valorant look ---------- */
+.footer-feedback .feedback-btn,
+#open-feedback-dashboard,
+#open-feedback {
+  display:inline-block;
+  background: linear-gradient(180deg, #ffffff 0%, #e6e6e6 100%);
+  color:#000;
+  padding:10px 18px;
+  border-radius:8px;
+  font-weight:700;
+  text-decoration:none;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.28);
+  transition: transform .12s ease;
+}
+.footer-feedback .feedback-btn:hover,
+#open-feedback-dashboard:hover,
+#open-feedback:hover { transform: translateY(-2px); }
+
+/* ---------- small responsive tweaks ---------- */
+@media (max-width: 720px) {
+  .feedback-panel { width: 92%; padding:14px; border-radius:10px; }
+  .vf-row { flex-direction: column; }
+  .vf-badge { display:none; }
+}
+
+/* ---------- pop animation ---------- */
+@keyframes vf-pop { from{ opacity:0; transform: translateY(16px) scale(.995);} to{ opacity:1; transform: translateY(0) scale(1);} }
+
+footer.footer-section {
+    background: transparent !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+}

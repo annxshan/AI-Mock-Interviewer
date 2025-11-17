@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI Interviewer - Authentication</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/auth.css">
+</head>
+<body>
+<div id="loading">Loading...</div>
+<div class="auth-container">
+    <div class="logo">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z" />
+        </svg>
+    </div>
+    <h1>AI Interviewer</h1>
+    <p class="subtitle">Practice interviews with AI-powered feedback</p>
+    
+    <!-- Login/Signup Form -->
+    <div class="form-card" id="auth-form-card"> 
+        <nav class="tab-nav">
+            <button class="tab active" id="sign-in-tab">Sign In</button>
+            <button class="tab" id="sign-up-tab">Sign Up</button>
+        </nav>
+        <form id="auth-form">
+            <div class="form-group" id="name-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" class="input-field" placeholder="Your full name" minlength="2" />
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" class="input-field" placeholder="you@example.com" required />
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" class="input-field" placeholder="••••••••" required minlength="6" />
+            </div>
+            <button type="submit" class="submit-btn" id="submit-button">Sign In</button>
+        </form>
+        <p id="error-message"></p>
+    </div>
+
+    <!-- TEMPORARY Logged In Panel -->
+    <div class="form-card" id="logged-in-message" style="display: none;">
+        <h2>Session Active</h2>
+        <p class="subtitle" id="user-display-name">You are currently logged in. **Click Log Out below to clear your session.**</p>
+        <button class="submit-btn" id="logout-button" style="background-color: var(--error); margin-bottom: 10px;">Log Out</button>
+    </div>
+
+
+    <p class="footer-text">Real-time voice interaction powered by AI</p>
+</div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    updateProfile,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDc9q_RzqRblwTTbz1I_HCy4ikQ4_T7FV4",
+    authDomain: "ai-interviewer-9802e.firebaseapp.com",
+    projectId: "ai-interviewer-9802e",
+    storageBucket: "ai-interviewer-9802e.firebasestorage.app",
+    messagingSenderId: "40902420294",
+    appId: "1:40902420294:web:a01a07d878d46df6f7e747",
+    measurementId: "G-XWH432EKQM"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+const loading = document.getElementById("loading");
+const authContainer = document.querySelector(".auth-container");
+const signInTab = document.getElementById("sign-in-tab");
+const signUpTab = document.getElementById("sign-up-tab");
+const submitButton = document.getElementById("submit-button");
+const authForm = document.getElementById("auth-form");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const nameGroup = document.getElementById("name-group");
+const nameInput = document.getElementById("name");
+const errorMessage = document.getElementById("error-message");
+
+const authFormCard = document.getElementById("auth-form-card");
+const loggedInMessage = document.getElementById("logged-in-message");
+const logoutButton = document.getElementById("logout-button");
+const userDisplayName = document.getElementById("user-display-name");
+
+let isSignInMode = true;
+
+// Log Out Functionality
+async function handleLogout() {
+    try {
+        await signOut(auth);
+        // After signing out, the onAuthStateChanged listener will run, and since user is null, 
+        // it will show the forms. No manual redirect is needed.
+    } catch (error) {
+        console.error("Logout Failed:", error);
+    }
+}
+logoutButton.addEventListener("click", handleLogout);
+
+
+function setMode(isSignIn) {
+    isSignInMode = isSignIn;
+    errorMessage.textContent = "";
+    if (isSignIn) {
+        signInTab.classList.add("active");
+        signUpTab.classList.remove("active");
+        submitButton.textContent = "Sign In";
+        nameGroup.style.display = "none";
+        nameInput.required = false;
+    } else {
+        signInTab.classList.remove("active");
+        signUpTab.classList.add("active");
+        submitButton.textContent = "Sign Up";
+        nameGroup.style.display = "block";
+        nameInput.required = true;
+    }
+}
+signInTab.addEventListener("click", () => setMode(true));
+signUpTab.addEventListener("click", () => setMode(false));
+
+// Dynamic UI rendering based on Firebase Authentication state
+onAuthStateChanged(auth, (user) => {
+    loading.style.display = "none";
+    authContainer.style.display = "block";
+
+    if (user) {
+        // User is logged in: Show the LOGOUT PANEL
+        authFormCard.style.display = "none";
+        loggedInMessage.style.display = "block";
+        const name = user.displayName || user.email;
+        userDisplayName.textContent = `You are currently logged in as ${name}. Click Log Out below to clear your session.`;
+    } else {
+        // User is logged out: Show the SIGN IN/UP FORM
+        authFormCard.style.display = "block";
+        loggedInMessage.style.display = "none";
+        setMode(true); 
+    }
+});
+
+authForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = emailInput.value;
+    const password = passwordInput.value;
+    const displayName = nameInput.value.trim();
+    errorMessage.textContent = "";
+
+    try {
+        if (isSignInMode) {
+            await signInWithEmailAndPassword(auth, email, password);
+        } else {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            if (displayName) {
+                await updateProfile(userCredential.user, {
+                    displayName: displayName
+                });
+            }
+        }
+        // After successful sign in/up, redirect directly to the home page (as per your request)
+        window.location.href = "index.html";
+    } catch (error) {
+        let friendlyMessage = "An unknown error occurred. Please try again.";
+        switch (error.code) {
+            case "auth/invalid-email":
+                friendlyMessage = "Please enter a valid email address.";
+                break;
+            case "auth/user-not-found":
+            case "auth/wrong-password":
+                friendlyMessage = "Invalid email or password. Please try again.";
+                break;
+            case "auth/email-already-in-use":
+                friendlyMessage = "An account already exists with this email address.";
+                break;
+            case "auth/weak-password":
+                friendlyMessage = "Password should be at least 6 characters long.";
+                break;
+            case "auth/operation-not-allowed":
+                friendlyMessage = "Email/password accounts are not enabled.";
+                break;
+            default:
+                console.error("Firebase Error:", error.code, error.message);
+        }
+        errorMessage.textContent = friendlyMessage;
+    }
+});</script>
+</body>
+</html>
