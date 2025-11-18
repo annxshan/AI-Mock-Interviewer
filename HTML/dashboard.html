@@ -340,13 +340,36 @@ onAuthStateChanged(auth, (user) => {
           sendBtn.textContent = 'Sending...';
         }
 
+        // Get user info from form fields, localStorage, or Firebase auth
+        let userName = nameEl?.value || 'Anonymous';
+        let userEmail = emailEl?.value || 'unknown@example.com';
+        
+        // Try localStorage profile if form fields are empty
+        if (userName === 'Anonymous' || userEmail === 'unknown@example.com') {
+          try {
+            const profile = JSON.parse(localStorage.getItem('ai_user_profile') || '{}');
+            if (profile.name && userName === 'Anonymous') userName = profile.name;
+            if (profile.email && userEmail === 'unknown@example.com') userEmail = profile.email;
+          } catch (err) {}
+        }
+        
+        // Try Firebase auth as final fallback
+        if ((userName === 'Anonymous' || userEmail === 'unknown@example.com') && auth.currentUser) {
+          if (userName === 'Anonymous') {
+            userName = auth.currentUser.displayName || auth.currentUser.email?.split('@')[0] || 'Anonymous';
+          }
+          if (userEmail === 'unknown@example.com') {
+            userEmail = auth.currentUser.email || 'unknown@example.com';
+          }
+        }
+
         const payload = {
           service_id: CONFIG.service_id,
           template_id: CONFIG.template_id,
           user_id: CONFIG.user_id,
           template_params: {
-            from_name: nameEl ? (nameEl.value || 'Anonymous') : 'Anonymous',
-            from_email: emailEl ? (emailEl.value || 'unknown@example.com') : 'unknown@example.com',
+            from_name: userName,
+            from_email: userEmail,
             message: message
           }
         };

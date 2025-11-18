@@ -202,13 +202,23 @@ feedbackForm.addEventListener('submit', async (evt) => {
   fbSendBtn.disabled = true;
   fbSendBtn.textContent = 'Sending...';
 
+  // Get current user info from Firebase auth
+  const currentUser = auth.currentUser;
+  let userName = fbName.value || 'Anonymous';
+  let userEmail = fbEmail.value || 'unknown@example.com';
+  
+  if (currentUser) {
+    userName = currentUser.displayName || currentUser.email?.split('@')[0] || userName;
+    userEmail = currentUser.email || userEmail;
+  }
+
   const payload = {
     service_id: 'service_hqyg6b7',       // your Service ID
     template_id: 'template_2u6b9i9',     // your Template ID
     user_id: 'KFHSBsY_sCQlYjltB',        // your EmailJS User ID (public key)
     template_params: {
-      from_name: fbName.value || 'Anonymous',
-      from_email: fbEmail.value || 'unknown@example.com',
+      from_name: userName,
+      from_email: userEmail,
       message: message
     }
   };
