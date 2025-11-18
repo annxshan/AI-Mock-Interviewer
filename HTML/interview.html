@@ -448,8 +448,8 @@
     conversation.push({ role: 'user', parts: [{ text: text }] });
     addChatBubble('user', text);
 
-    // STOP AFTER 6 QUESTIONS
-    if (metrics.length >= 7) {
+    // STOP AFTER 10 QUESTIONS
+    if (metrics.length >= 10) {
         disableSpeaking();
         return;
     }
@@ -500,7 +500,7 @@
     addChatBubble('system', 'Skipped question');
     // count skip as an answered question (if desired). If you DON'T want skip to count, remove the next two lines.
     metrics.push({ text: "[skipped]", responseTime: 0, words: 0 });
-    if (metrics.length >= 7) {
+    if (metrics.length >= 10) {
       disableSpeaking();
       return;
     }
