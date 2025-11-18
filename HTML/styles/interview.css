@@ -403,9 +403,193 @@
     }
     @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
+    /* --- Privacy Modal Styles --- */
+    .privacy-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: fadeIn 0.2s ease;
+    }
+
+    .privacy-modal.hidden {
+        display: none;
+    }
+
+    .privacy-modal-backdrop {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+    }
+
+    .privacy-modal-content {
+        position: relative;
+        background: var(--card);
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        max-width: 520px;
+        width: 90%;
+        max-height: 85vh;
+        overflow-y: auto;
+        z-index: 10000;
+        animation: slideUp 0.3s ease;
+    }
+
+    .privacy-modal-header {
+        padding: 2rem 2rem 1rem;
+        text-align: center;
+        border-bottom: 1px solid var(--border-light);
+    }
+
+    .privacy-icon {
+        color: var(--primary);
+        margin-bottom: 1rem;
+    }
+
+    .privacy-modal-header h2 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: var(--text-dark);
+        font-weight: 700;
+    }
+
+    .privacy-modal-body {
+        padding: 2rem;
+    }
+
+    .privacy-modal-body p {
+        margin: 0 0 1.5rem 0;
+        color: var(--text-dark);
+        line-height: 1.6;
+    }
+
+    .privacy-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 1.5rem 0;
+    }
+
+    .privacy-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 1rem;
+        padding: 0.75rem;
+        background: var(--background);
+        border-radius: 8px;
+        border-left: 3px solid var(--success);
+    }
+
+    .privacy-list li svg {
+        flex-shrink: 0;
+        color: var(--success);
+        margin-top: 2px;
+    }
+
+    .privacy-list li span {
+        color: var(--text-dark);
+        line-height: 1.5;
+        font-size: 0.95rem;
+    }
+
+    .privacy-note {
+        font-size: 0.875rem;
+        color: var(--text-light);
+        background: var(--background);
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 0;
+    }
+
+    .privacy-modal-footer {
+        padding: 1.5rem 2rem 2rem;
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-end;
+        border-top: 1px solid var(--border-light);
+    }
+
+    .privacy-btn {
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        border: none;
+        transition: all 0.2s ease;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .privacy-btn-primary {
+        background: var(--primary);
+        color: white;
+        box-shadow: 0 2px 4px rgba(21, 100, 220, 0.2);
+    }
+
+    .privacy-btn-primary:hover {
+        background: var(--primary-dark);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(21, 100, 220, 0.3);
+    }
+
+    .privacy-btn-secondary {
+        background: transparent;
+        color: var(--text-light);
+        border: 1px solid var(--border-light);
+    }
+
+    .privacy-btn-secondary:hover {
+        background: var(--background);
+        color: var(--text-dark);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+        from { 
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to { 
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
     /* Responsive override for smaller screens */
     @media (max-width: 768px) {
         #interview-flex-container { flex-direction: column; }
         #video-section, #interaction-panel { width: 100%; height: 50%; }
         #interaction-panel { border-left: none; border-top: 1px solid var(--border-light); }
+        
+        .privacy-modal-content {
+            width: 95%;
+            max-height: 90vh;
+        }
+        
+        .privacy-modal-header,
+        .privacy-modal-body,
+        .privacy-modal-footer {
+            padding: 1.5rem;
+        }
+        
+        .privacy-modal-footer {
+            flex-direction: column;
+        }
+        
+        .privacy-btn {
+            width: 100%;
+        }
     }

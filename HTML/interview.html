@@ -31,6 +31,45 @@
             </div>
         </nav>
 
+        <!-- Privacy Disclaimer Modal -->
+        <div id="privacy-modal" class="privacy-modal hidden">
+            <div class="privacy-modal-backdrop"></div>
+            <div class="privacy-modal-content">
+                <div class="privacy-modal-header">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="privacy-icon">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                    <h2>Privacy & Permissions</h2>
+                </div>
+                <div class="privacy-modal-body">
+                    <p><strong>Your privacy is our priority.</strong></p>
+                    <ul class="privacy-list">
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span><strong>Nothing is being recorded or sent to any third party.</strong></span>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span><strong>All communication is end-to-end encrypted.</strong></span>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span><strong>Camera</strong> is used to create a realistic interview experience.</span>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span><strong>Microphone</strong> is used for voice recognition and speech functionality.</span>
+                        </li>
+                    </ul>
+                    <p class="privacy-note">Your browser will ask for permission to access your camera and microphone. You can revoke these permissions at any time.</p>
+                </div>
+                <div class="privacy-modal-footer">
+                    <button id="privacy-decline-btn" class="privacy-btn privacy-btn-secondary">Cancel</button>
+                    <button id="privacy-accept-btn" class="privacy-btn privacy-btn-primary">I Understand, Continue</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Start Screen -->
         <div id="start-screen" class="screen">
             <h1>Master Your Next <br><span class="highlight-1">Video Interview</span></h1>
@@ -345,13 +384,60 @@
         }
 
         // --- Main Interview Flow ---
-        startBtn.addEventListener('click', async () => {
+        const privacyModal = document.getElementById('privacy-modal');
+        const privacyAcceptBtn = document.getElementById('privacy-accept-btn');
+        const privacyDeclineBtn = document.getElementById('privacy-decline-btn');
+
+        // --- Privacy Modal Handlers ---
+        function showPrivacyModal() {
+            privacyModal.classList.remove('hidden');
+        }
+
+        function hidePrivacyModal() {
+            privacyModal.classList.add('hidden');
+        }
+
+        privacyAcceptBtn.addEventListener('click', async () => {
+            hidePrivacyModal();
+            await requestPermissionsAndStart();
+        });
+
+        privacyDeclineBtn.addEventListener('click', () => {
+            hidePrivacyModal();
+            errMsg.textContent = 'Camera and microphone permissions are required to start the interview.';
+            errMsg.style.display = 'block';
+            permMsg.style.display = 'none';
+            startBtn.disabled = false;
+        });
+
+        // Close modal on backdrop click
+        privacyModal.addEventListener('click', (e) => {
+            if (e.target === privacyModal || e.target.classList.contains('privacy-modal-backdrop')) {
+                hidePrivacyModal();
+            }
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !privacyModal.classList.contains('hidden')) {
+                hidePrivacyModal();
+            }
+        });
+
+        startBtn.addEventListener('click', () => {
             const role = jobInput.value.trim();
             if (!role) {
                 errMsg.style.display = 'block';
+                errMsg.textContent = 'Please enter a job role.';
+                jobInput.focus();
                 return;
             }
             errMsg.style.display = 'none';
+            showPrivacyModal();
+        });
+
+        async function requestPermissionsAndStart() {
+            const role = jobInput.value.trim();
             permMsg.style.display = 'block';
             startBtn.disabled = true;
 
@@ -380,7 +466,7 @@
                 permMsg.style.color = 'var(--danger)';
                 startBtn.disabled = false;
             }
-        });
+        }
 
         async function turnAI() {
             setBusy(true);
