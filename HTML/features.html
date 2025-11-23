@@ -88,56 +88,7 @@
     </main>
     
 <!-- Consistent Firebase Auth Script -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyDc9q_RzqRblwTTbz1I_HCy4ikQ4_T7FV4",
-    authDomain: "ai-interviewer-9802e.firebaseapp.com",
-    projectId: "ai-interviewer-9802e",
-    storageBucket: "ai-interviewer-9802e.firebasestorage.app",
-    messagingSenderId: "40902420294",
-    appId: "1:40902420294:web:a01a07d878d46df6f7e747",
-    measurementId: "G-XWH432EKQM"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const authContainer = document.getElementById('auth-action-container');
-
-async function handleLogout() {
-    try {
-        await signOut(auth);
-        window.location.reload(); 
-    } catch (error) {
-        console.error("Logout Failed:", error);
-    }
-}
-
-onAuthStateChanged(auth, (user) => {
-    authContainer.innerHTML = '';
-    if (user) {
-        const name = user.displayName ? user.displayName.split(' ')[0] : user.email.split('@')[0];
-        const welcomeText = document.createElement('span');
-        welcomeText.textContent = `Welcome, ${name}`;
-        welcomeText.classList.add('welcome-text');
-        authContainer.appendChild(welcomeText);
-
-        const logoutButton = document.createElement('button');
-        logoutButton.textContent = 'Log Out';
-        logoutButton.classList.add('btn', 'auth-nav-btn', 'logout');
-        logoutButton.addEventListener('click', handleLogout);
-        authContainer.appendChild(logoutButton);
-    } else {
-        const loginLink = document.createElement('a');
-        loginLink.textContent = 'Log in / Sign up';
-        loginLink.href = 'auth.html';
-        loginLink.classList.add('btn', 'auth-nav-btn');
-        authContainer.appendChild(loginLink);
-    }
-});
-</script>
 <script src=""></script>
 </body>
 </html>
