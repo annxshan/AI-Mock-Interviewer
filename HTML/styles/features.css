@@ -360,25 +360,6 @@
         .auth-nav-btn.logout:hover {
             background: #1564dc;
         }
-.menu-auth-btn {
-    width: 100%;
-    padding: 10px;
-    display: block;
-    text-align: center;
-    background: #1564dc;
-    color: white;
-    border-radius: 8px;
-    margin-top: 1rem;
-    font-weight: 600;
-}
-
-.menu-auth-btn.logout {
-    background: #e63946;
-}
-
-.menu-auth-btn:hover {
-    opacity: 0.85;
-}
 
 
 /* ===== styles for hamburger + slide menu ===== */

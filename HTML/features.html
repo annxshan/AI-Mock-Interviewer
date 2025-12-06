@@ -11,16 +11,10 @@
 <body>
     <nav class="navbar">
         <a class="logo" href="index.html">AI Interviewer</a>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li> <!-- Updated: Home -->
-            <li class="active"><a href="features.html">Features</a></li> <!-- Updated: Features (Active) -->
-            <li><a href="about.html">About</a></li>
-        </ul>
         <div id="auth-action-container">
             <!-- Dynamic Auth Button will load here -->
         </div>
-        <!-- <a class="btn login-btn" href="#">Log in / Sign up</a> -->
-         <div class="hamburger-space"></div>
+        <div class="hamburger-space"></div>
     </nav>
 <!-- Hamburger Button -->
  
@@ -143,29 +137,37 @@ async function handleLogout() {
     }
 }
 
-onAuthStateChanged(auth, (user) => {
-    authContainer.innerHTML = '';
-    if (user) {
-        const name = user.displayName ? user.displayName.split(' ')[0] : user.email.split('@')[0];
-        const welcomeText = document.createElement('span');
-        welcomeText.textContent = `Welcome, ${name}`;
-        welcomeText.classList.add('welcome-text');
-        authContainer.appendChild(welcomeText);
+// Logout button action for the slide-out menu
+const menuLogoutButton = document.getElementById("menu-logout-btn");
+if (menuLogoutButton) menuLogoutButton.addEventListener("click", handleLogout);
 
-        const logoutButton = document.createElement('button');
-        logoutButton.textContent = 'Log Out';
-        logoutButton.classList.add('btn', 'auth-nav-btn', 'logout');
-        logoutButton.addEventListener('click', handleLogout);
-        authContainer.appendChild(logoutButton);
+onAuthStateChanged(auth, (user) => {
+    const navBox = document.getElementById('auth-action-container');
+    const menuLogin = document.getElementById("menu-login-btn");
+    const menuLogout = document.getElementById("menu-logout-btn");
+
+    if (!navBox || !menuLogin || !menuLogout) return;
+
+    navBox.innerHTML = ''; 
+
+    if (user) {
+        // --- Top Navbar (stays empty) ---
+
+        // --- Slide-Out Menu ---
+        menuLogin.style.display = "none";
+        menuLogout.style.display = "block";
     } else {
+        // --- Top Navbar ---
         const loginLink = document.createElement('a');
-        loginLink.textContent = 'Log in / Sign up';
         loginLink.href = 'auth.html';
         loginLink.classList.add('btn', 'auth-nav-btn');
-        authContainer.appendChild(loginLink);
+        navBox.appendChild(loginLink);
+
+        // --- Slide-Out Menu ---
+        menuLogin.style.display = "block";
+        menuLogout.style.display = "none";
     }
 });
 </script>
-<script src=""></script>
 </body>
 </html>
