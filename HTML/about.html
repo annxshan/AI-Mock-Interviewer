@@ -7,6 +7,11 @@
     <!-- Use a professional, clean font from Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/about.css">
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+    </style>
 </head>
 <body>
     <!-- Consistent Navigation Bar -->
@@ -122,6 +127,66 @@
         </div>
     </main>
 
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDc9q_RzqRblwTTbz1I_HCy4ikQ4_T7FV4",
+    authDomain: "ai-interviewer-9802e.firebaseapp.com",
+    projectId: "ai-interviewer-9802e",
+    storageBucket: "ai-interviewer-9802e.firebasestorage.app",
+    messagingSenderId: "40902420294",
+    appId: "1:40902420294:web:a01a07d878d46df6f7e747",
+    measurementId: "G-XWH432EKQM"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const authContainer = document.getElementById('auth-action-container');
+
+async function handleLogout() {
+    try {
+        await signOut(auth);
+        window.location.reload(); 
+    } catch (error) {
+        console.error("Logout Failed:", error);
+    }
+}
+
+// Logout button action for the slide-out menu
+const menuLogoutButton = document.getElementById("menu-logout-btn");
+if (menuLogoutButton) menuLogoutButton.addEventListener("click", handleLogout);
+
+onAuthStateChanged(auth, (user) => {
+    const navBox = document.getElementById('auth-action-container');
+    const menuLogin = document.getElementById("menu-login-btn");
+    const menuLogout = document.getElementById("menu-logout-btn");
+
+    if (!navBox || !menuLogin || !menuLogout) return;
+
+    navBox.innerHTML = ''; 
+
+    if (user) {
+        
+
+        // --- Slide-Out Menu ---
+        menuLogin.style.display = "none";
+        menuLogout.style.display = "block";
+    } else {
+        // --- Top Navbar ---
+        const loginLink = document.createElement('a');
+        
+        loginLink.href = 'auth.html';
+        
+        navBox.appendChild(loginLink);
+
+        // --- Slide-Out Menu ---
+        menuLogin.style.display = "block";
+        menuLogout.style.display = "none";
+    }
+});
+</script>
 
 </body>
 </html>
