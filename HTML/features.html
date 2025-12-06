@@ -11,6 +11,11 @@
 <body>
     <nav class="navbar">
         <a class="logo" href="index.html">AI Interviewer</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li> <!-- Updated: Home -->
+            <li class="active"><a href="features.html">Features</a></li> <!-- Updated: Features (Active) -->
+            <li><a href="about.html">About</a></li>
+        </ul>
         <div id="auth-action-container">
             <!-- Dynamic Auth Button will load here -->
         </div>
@@ -114,9 +119,6 @@
     </main>
     
 <!-- Consistent Firebase Auth Script -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyC9wCNe_gbc1cEJWJcQipQtt1fRtdBuqNg",

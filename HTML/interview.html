@@ -216,11 +216,10 @@
         let timerInterval = null;
         let aiSpeaking = false;
         let aiQuestionTime = null;
-        // audioCtx not needed for simple browser TTS
 
-        const API_KEY = "AIzaSyBBNsD-fTSniUQCpP2EWATmzYekn7kRpMQ"; // Kept for demo purposes
-        const MODEL = "gemini-2.5-flash-preview-05-20";
-        // Removed TTS_MODEL as we are now using standard browser voices
+        // API Configuration - Updated
+        const API_KEY = "AIzaSyCaIavVxyVlyXeqDYRHKp6p8qd6jb_nhjM";
+        const MODEL = "gemini-2.5-flash";
 
         // --- Browser Voice Population ---
             // --- Browser Voice Population (Edge-friendly, preserves selection) ---
@@ -498,7 +497,20 @@
                         systemInstruction: { role: 'system', parts: [{ text: "You are a video interviewer. Ask 1 clear question at a time. Keep responses concise (under 2 sentences). Ask 6 questions total. Ask some questions about functions or interview questions. Check if the candidate answers question correct and if not, provide a brief correction." }] }
                     })
                 });
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('API Error:', response.status, errorText);
+                    throw new Error(`API returned ${response.status}: ${errorText}`);
+                }
+                
                 const data = await response.json();
+                
+                if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
+                    console.error('Invalid API response:', data);
+                    throw new Error('Invalid response from AI');
+                }
+                
                 const aiText = data.candidates[0].content.parts[0].text;
                 
                 conversation.push({ role: 'model', parts: [{ text: aiText }] });
@@ -508,7 +520,7 @@
                 speakBrowser(aiText);
 
             } catch (e) {
-                console.error(e);
+                console.error('Full error details:', e);
                 addChatBubble('ai', "Connection error. Please try again.");
                 setBusy(false);
             }
