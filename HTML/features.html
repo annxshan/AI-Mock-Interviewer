@@ -19,8 +19,39 @@
         <div id="auth-action-container">
             <!-- Dynamic Auth Button will load here -->
         </div>
-        <!-- <a class="btn login-btn" href="#">Log in / Sign up</a> -->
+        <div class="hamburger-space"></div>
     </nav>
+<!-- Hamburger Button -->
+ 
+    <!-- Hamburger Button -->
+<button id="hamburger-btn" aria-label="Open menu" aria-expanded="false" class="hamburger" type="button">
+  <span class="bar"></span>
+  <span class="bar"></span>
+  <span class="bar"></span>
+</button>
+
+<!-- Overlay -->
+<div id="menu-overlay" class="menu-overlay"></div>
+
+<!-- Slide-Out Menu -->
+<nav id="slide-menu" class="slide-menu">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="interview.html">Interview</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="analyzer.html">CV Analyzer</a></li>
+    <li><a href="builder.html">CV Builder</a></li>
+    <li><a href="features.html">Features</a></li>
+    <li><a href="about.html">About</a></li>
+
+    <!-- Login button: visible only when user is logged out -->
+    <li><a id="menu-login-btn" href="auth.html" class="menu-auth-btn" style="display:none;">Login</a></li>
+
+    <!-- Logout button: visible only when user is logged in -->
+    <li><button id="menu-logout-btn" class="menu-auth-btn logout" style="display:none;">Logout</button></li>
+  </ul>
+</nav>
+<script src="scripts/hamburger.js"></script>
 
     <main>
         <!-- Features Header -->
@@ -89,6 +120,56 @@
     
 <!-- Consistent Firebase Auth Script -->
 
-<script src=""></script>
+const firebaseConfig = {
+    apiKey: "AIzaSyC9wCNe_gbc1cEJWJcQipQtt1fRtdBuqNg",
+    authDomain: "ai-interviewer-app-5331b.firebaseapp.com",
+    projectId: "ai-interviewer-app-5331b",
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const authContainer = document.getElementById('auth-action-container');
+
+async function handleLogout() {
+    try {
+        await signOut(auth);
+        window.location.reload(); 
+    } catch (error) {
+        console.error("Logout Failed:", error);
+    }
+}
+
+// Logout button action for the slide-out menu
+const menuLogoutButton = document.getElementById("menu-logout-btn");
+if (menuLogoutButton) menuLogoutButton.addEventListener("click", handleLogout);
+
+onAuthStateChanged(auth, (user) => {
+    const navBox = document.getElementById('auth-action-container');
+    const menuLogin = document.getElementById("menu-login-btn");
+    const menuLogout = document.getElementById("menu-logout-btn");
+
+    if (!navBox || !menuLogin || !menuLogout) return;
+
+    navBox.innerHTML = ''; 
+
+    if (user) {
+        // --- Top Navbar (stays empty) ---
+
+        // --- Slide-Out Menu ---
+        menuLogin.style.display = "none";
+        menuLogout.style.display = "block";
+    } else {
+        // --- Top Navbar ---
+        const loginLink = document.createElement('a');
+        loginLink.href = 'auth.html';
+        loginLink.classList.add('btn', 'auth-nav-btn');
+        navBox.appendChild(loginLink);
+
+        // --- Slide-Out Menu ---
+        menuLogin.style.display = "block";
+        menuLogout.style.display = "none";
+    }
+});
+</script>
 </body>
 </html>
