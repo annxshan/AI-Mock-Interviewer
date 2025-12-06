@@ -12,15 +12,41 @@
     <!-- Consistent Navigation Bar -->
     <nav class="navbar">
         <a class="logo" href="index.html">AI Interviewer</a>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <!-- <li><a href="features.html">Features</a></li> -->
-            <li class="active"><a href="about.html">About</a></li>
-        </ul>
         <div id="auth-action-container">
             <!-- Dynamic Auth Button will load here -->
         </div>
+        <div class="hamburger-space"></div>
     </nav>
+
+    <!-- Hamburger Button -->
+<button id="hamburger-btn" aria-label="Open menu" aria-expanded="false" class="hamburger" type="button">
+  <span class="bar"></span>
+  <span class="bar"></span>
+  <span class="bar"></span>
+</button>
+
+<!-- Overlay -->
+<div id="menu-overlay" class="menu-overlay"></div>
+
+<!-- Slide-Out Menu -->
+<nav id="slide-menu" class="slide-menu">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="interview.html">Interview</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="analyzer.html">CV Analyzer</a></li>
+    <li><a href="builder.html">CV Builder</a></li>
+    <li><a href="features.html">Features</a></li>
+    <li><a href="about.html">About</a></li>
+
+    <!-- Login button: visible only when user is logged out -->
+    <li><a id="menu-login-btn" href="auth.html" class="menu-auth-btn" style="display:none;">Login</a></li>
+
+    <!-- Logout button: visible only when user is logged in -->
+    <li><button id="menu-logout-btn" class="menu-auth-btn logout" style="display:none;">Logout</button></li>
+  </ul>
+</nav>
+<script src="scripts/hamburger.js"></script>
 
     <main>
         <div class="about-header">

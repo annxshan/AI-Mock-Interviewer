@@ -64,6 +64,12 @@
         font-size: 0.9rem;
         color: var(--text-light);
     }
+    .nav-actions {
+  display: flex;
+  gap: 12px;
+  margin-left: auto;
+}
+
 
     /* Placeholder for user's custom header items */
     #main-header-nav {
