@@ -359,18 +359,12 @@
     text-align: center;
     padding: 10px;
     background: #1564dc;
-    color: white;
+    color: white !important; 
     border-radius: 8px;
     font-weight: 600;
     margin-top: 1rem;
     border: none; /* Ensure button reset */
     cursor: pointer;
-}
-.menu-auth-btn.logout {
-    background: #e63946;
-}
-.menu-auth-btn:hover {
-    opacity: 0.85;
 }
 
 /* Responsive tweak for the slide-out menu */
@@ -381,3 +375,24 @@
         right: calc(-86vw - 2.4rem);
     }
 }
+/* ==== Override hamburger slide-menu logout color on About page ==== */
+/* Overrides the global red rule at styles/style.css that sets .menu-auth-btn.logout to red. */
+.slide-menu .menu-auth-btn.logout {
+   width: 100%;
+    display: block;
+    text-align: center;
+    padding: 10px;
+    background: #e63946 !important;
+    color: white !important;
+    border-radius: 8px;
+    font-weight: 600;
+    margin-top: 1rem;
+    border: none; /* Ensure button reset */
+    cursor: pointer;
+}
+
+/* keep hover consistent with primary dark */
+.slide-menu .menu-auth-btn.logout:hover {
+ opacity: 0.85;
+}
+
