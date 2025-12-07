@@ -897,6 +897,8 @@ body.menu-open .hamburger {
     }
 }
 
+/* ======= Hamburger Menu Styles ======= */
+
 /* Hamburger Button */
 .hamburger {
     position: fixed;
@@ -911,63 +913,143 @@ body.menu-open .hamburger {
     background: transparent;
     cursor: pointer;
     z-index: 3000;
+    padding: 0;
+    display: inline-flex; /* Use flex for alignment */
 }
 
 .hamburger .bar {
+    display: block;
     height: 4px;
     width: 100%;
     background: #1564dc;
     border-radius: 4px;
-    transition: 0.3s;
+    transition: transform .28s ease, opacity .2s ease;
+    transform-origin: center;
+}
+
+/* Animation to 'X' when the .open class is added by JS */
+.hamburger.open .bar:nth-child(1) {
+    transform: translateY(10px) rotate(45deg);
+}
+
+.hamburger.open .bar:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0.2);
+}
+
+.hamburger.open .bar:nth-child(3) {
+    transform: translateY(-10px) rotate(-45deg);
 }
 
 /* Slide Menu */
 .slide-menu {
     position: fixed;
     top: 0;
-    right: -270px;
-    width: 250px;
+    /* Correctly hide the menu off-screen by accounting for width AND padding */
+    right: calc(-260px - 2.4rem); 
+    width: 260px;
     height: 100vh;
     background: #fff;
-    padding: 2rem 1rem;
-    transition: 0.3s ease;
-    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+    padding: 2.2rem 1.2rem;
+    box-sizing: border-box; /* This is crucial for the 'right' calculation to work */
+    transition: right .32s cubic-bezier(.2, .9, .3, 1);
+    box-shadow: -12px 0 30px rgba(0, 0, 0, 0.12);
     z-index: 2500;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
+/* Visible state, toggled by JS */
 .slide-menu.show {
     right: 0;
 }
 
+/* Overlay */
 .menu-overlay {
     position: fixed;
     inset: 0;
     display: none;
-    background: rgba(0, 0, 0, 0.28);
-    -webkit-backdrop-filter: blur(4px);
-    backdrop-filter: blur(4px);
+    background: rgba(0, 0, 0, 0.32);
     z-index: 2000;
 }
 
+/* Add blur effect if browser supports it */
+@supports ((-webkit-backdrop-filter: blur(6px)) or (backdrop-filter: blur(6px))) {
+    .menu-overlay {
+        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(6px);
+        background: rgba(0, 0, 0, 0.18);
+    }
+}
+
+/* Visible state, toggled by JS */
 .menu-overlay.show {
     display: block;
 }
 
-/* Menu buttons */
+/* Menu List Styles */
+.slide-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.slide-menu li {
+    margin-bottom: 1.2rem;
+}
+.slide-menu a, .slide-menu button {
+    text-decoration: none;
+    color: #202225;
+    font-weight: 600;
+    font-size: 1.02rem;
+    display: block;
+    padding: .25rem;
+}
+.slide-menu a:hover {
+    color: #1564dc;
+}
+
+/* Auth Buttons inside Menu */
 .menu-auth-btn {
     width: 100%;
     display: block;
     text-align: center;
     padding: 10px;
     background: #1564dc;
-    color: #fff;
+    color: white !important; 
     border-radius: 8px;
     font-weight: 600;
-    margin-top: 10px;
+    margin-top: 1rem;
+    border: none; /* Ensure button reset */
+    cursor: pointer;
 }
 
-.menu-auth-btn.logout {
-    background: #e63946;
+/* Responsive tweak for the slide-out menu */
+@media (max-width: 640px) {
+    .slide-menu {
+        width: 86vw;
+        /* Adjust the hiding calculation for the new width */
+        right: calc(-86vw - 2.4rem);
+    }
+}
+/* ==== Override hamburger slide-menu logout color on About page ==== */
+/* Overrides the global red rule at styles/style.css that sets .menu-auth-btn.logout to red. */
+.slide-menu .menu-auth-btn.logout {
+   width: 100%;
+    display: block;
+    text-align: center;
+    padding: 10px;
+    background: #e63946 !important;
+    color: white !important;
+    border-radius: 8px;
+    font-weight: 600;
+    margin-top: 1rem;
+    border: none; /* Ensure button reset */
+    cursor: pointer;
+}
+
+/* keep hover consistent with primary dark */
+.slide-menu .menu-auth-btn.logout:hover {
+ opacity: 0.85;
 }
 
 
