@@ -264,10 +264,12 @@
         </div>
     </main>
 
-    <script>
+    <script type="module">
         // --- Configuration ---
-        const apiKey = "AIzaSyCaIavVxyVlyXeqDYRHKp6p8qd6jb_nhjM"; 
-        const model = "gemini-2.5-flash-preview-09-2025";
+        import { API_KEY } from '../env/config.js';
+        const apiKey = API_KEY;
+
+        const model = "gemini-2.5-flash";
 
         // --- Elements ---
         const dropZone = document.getElementById('drop-zone');
