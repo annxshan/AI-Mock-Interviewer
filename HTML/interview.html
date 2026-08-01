@@ -176,7 +176,8 @@
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        import { API_KEY } from '../env/config.js';
         // --- DOM Elements ---
         const screens = {
             start: document.getElementById('start-screen'),
@@ -218,8 +219,10 @@
         let aiQuestionTime = null;
 
         // API Configuration - Updated
-        const API_KEY = "AQ.Ab8RN6JOGNVa-3oqMQMfu2kzt9m-eBAmXcFZlpDW4NICp2oHRw";
+        
+        console.log("Using API Key:", API_KEY ? "Loaded" : "Not Loaded");
         const MODEL = "gemini-2.5-flash";
+        
 
         // --- Browser Voice Population ---
             // --- Browser Voice Population (Edge-friendly, preserves selection) ---
