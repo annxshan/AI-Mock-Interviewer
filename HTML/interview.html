@@ -1,50 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Video Interviewer</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/interview.css">
-   
+
 </head>
+
 <body>
 
     <div id="app-container">
         <nav>
             <div class="nav-side">
 
-    
-    <!-- YOUR EXISTING “Start Over” button -->
-    <a href="AI_Video_Interviewer.html" id="nav-home-btn" class="nav-link" style="visibility: hidden;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-             viewBox="0 0 24 24" fill="none" stroke="currentColor" 
-             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="m15 18-6-6 6-6"/>
-        </svg>
-        Start Over
-    </a>
 
-</div>
+                <!-- YOUR EXISTING “Start Over” button -->
+                <a href="AI_Video_Interviewer.html" id="nav-home-btn" class="nav-link" style="visibility: hidden;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m15 18-6-6 6-6" />
+                    </svg>
+                    Start Over
+                </a>
+
+            </div>
 
             <div class="nav-center">
-                 <h1 style="font-size: 1.25rem; font-weight: 700; color: var(--primary); margin: 0;">AI Video Interviewer</h1>
+                <h1 style="font-size: 1.25rem; font-weight: 700; color: var(--primary); margin: 0;">AI Video Interviewer
+                </h1>
             </div>
             <div class="nav-side right">
                 <!-- NEW HOME BUTTON on the LEFT -->
-    <a href="index.html" class="nav-link">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" 
-             viewBox="0 0 24 24" fill="none" stroke="currentColor" 
-             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 9l9-7 9 7"></path>
-            <path d="M9 22V12h6v10"></path>
-        </svg>
-        Home
-    </a>
+                <a href="index.html" class="nav-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7"></path>
+                        <path d="M9 22V12h6v10"></path>
+                    </svg>
+                    Home
+                </a>
 
                 <!-- Link to Dashboard -->
                 <a href="Dashboard.html" class="nav-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="7" height="9" x="3" y="3" rx="1" />
+                        <rect width="7" height="5" x="14" y="3" rx="1" />
+                        <rect width="7" height="9" x="14" y="12" rx="1" />
+                        <rect width="7" height="5" x="3" y="16" rx="1" />
+                    </svg>
                     Dashboard
                 </a>
             </div>
@@ -55,7 +62,9 @@
             <div class="privacy-modal-backdrop"></div>
             <div class="privacy-modal-content">
                 <div class="privacy-modal-header">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="privacy-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="privacy-icon">
                         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                     </svg>
                     <h2>Privacy & Permissions</h2>
@@ -64,27 +73,46 @@
                     <p><strong>Your privacy is our priority.</strong></p>
                     <ul class="privacy-list">
                         <li>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
                             <span><strong>Nothing is being recorded or sent to any third party.</strong></span>
                         </li>
                         <li>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
                             <span><strong>All communication is end-to-end encrypted.</strong></span>
                         </li>
                         <li>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
                             <span><strong>Camera</strong> is used to create a realistic interview experience.</span>
                         </li>
                         <li>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            <span><strong>Microphone</strong> is used for voice recognition and speech functionality.</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span><strong>Microphone</strong> is used for voice recognition and speech
+                                functionality.</span>
                         </li>
                     </ul>
-                    <p class="privacy-note">Your browser will ask for permission to access your camera and microphone. You can revoke these permissions at any time.</p>
+                    <p class="privacy-note">Your browser will ask for permission to access your camera and microphone.
+                        You can revoke these permissions at any time.</p>
                 </div>
                 <div class="privacy-modal-footer">
                     <button id="privacy-decline-btn" class="privacy-btn privacy-btn-secondary">Cancel</button>
-                    <button id="privacy-accept-btn" class="privacy-btn privacy-btn-primary">I Understand, Continue</button>
+                    <button id="privacy-accept-btn" class="privacy-btn privacy-btn-primary">I Understand,
+                        Continue</button>
                 </div>
             </div>
         </div>
@@ -93,33 +121,42 @@
         <div id="start-screen" class="screen">
             <h1>Master Your Next <br><span class="highlight-1">Video Interview</span></h1>
             <p>Experience a realistic mock interview with real-time video and AI-powered questions.</p>
-            
+
             <div class="input-container">
                 <input type="text" id="job-role-input" placeholder="Enter target job role (e.g., Product Manager)">
-                
+
                 <!-- Voice Select Dropdown - NOW DYNAMIC -->
                 <select id="voice-select">
                     <option value="">Loading English voices...</option>
                 </select>
-                
+
                 <button id="start-interview-btn" class="main-cta" style="width: 100%;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 10px;"><path d="M23 7l-7 5 7 5V7z"></path><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        style="margin-right: 10px;">
+                        <path d="M23 7l-7 5 7 5V7z"></path>
+                        <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                    </svg>
                     Start Camera & Interview
                 </button>
             </div>
-            
-            <p id="error-message" style="color: var(--danger); margin-top: 1rem; font-size: 0.9rem; display: none;">Please enter a job role.</p>
-            <p id="permission-message" style="color: var(--text-light); margin-top: 1rem; font-size: 0.9rem; display: none;">Waiting for camera and microphone permissions...</p>
+
+            <p id="error-message" style="color: var(--danger); margin-top: 1rem; font-size: 0.9rem; display: none;">
+                Please enter a job role.</p>
+            <p id="permission-message"
+                style="color: var(--text-light); margin-top: 1rem; font-size: 0.9rem; display: none;">Waiting for camera
+                and microphone permissions...</p>
         </div>
 
         <!-- Video Interview Screen (Side-by-Side) -->
         <div id="interview-screen" class="screen hidden">
             <div class="interview-header">
-                 <div>
-                     <h2>Live Interview</h2>
-                     <span id="interviewing-for"></span>
-                 </div>
-                 <div id="timer" style="font-variant-numeric: tabular-nums; font-weight: 600; color: var(--danger);">00:00</div>
+                <div>
+                    <h2>Live Interview</h2>
+                    <span id="interviewing-for"></span>
+                </div>
+                <div id="timer" style="font-variant-numeric: tabular-nums; font-weight: 600; color: var(--danger);">
+                    00:00</div>
             </div>
 
             <div id="interview-flex-container">
@@ -143,12 +180,20 @@
 
                     <div class="controls-area">
                         <button id="skip-btn" class="control-action-btn">Skip</button>
-                        
+
                         <div style="text-align: center; display: flex; flex-direction: column; align-items: center;">
                             <button id="mic-btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                                    <line x1="12" y1="19" x2="12" y2="23"></line>
+                                </svg>
                             </button>
-                            <span id="mic-status" style="font-size: 0.75rem; color: var(--text-light); margin-top: 4px;">Tap to speak</span>
+                            <span id="mic-status"
+                                style="font-size: 0.75rem; color: var(--text-light); margin-top: 4px;">Tap to
+                                speak</span>
                         </div>
 
                         <button id="end-btn" class="control-action-btn">End</button>
@@ -156,28 +201,30 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Report Screen -->
         <div id="report-screen" class="screen hidden">
             <h2 style="text-align: center; margin-bottom: 1rem;">Interview Analysis</h2>
-            
-            <div id="report-loader" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4rem 0;">
+
+            <div id="report-loader"
+                style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4rem 0;">
                 <div class="spinner"></div>
-                <p style="color: var(--text-light); margin-top: 1.5rem; text-align: center;">Analyzing your performance...<br>Generating personalized feedback.</p>
+                <p style="color: var(--text-light); margin-top: 1.5rem; text-align: center;">Analyzing your
+                    performance...<br>Generating personalized feedback.</p>
             </div>
 
             <div id="report-metrics" class="metric-grid hidden" style="margin-bottom: 2rem;"></div>
             <div id="report-content" class="hidden"></div>
 
-            <div id="report-actions" class="hidden" style="margin-top: 3rem; display: flex; gap: 1rem; justify-content: center; padding-bottom: 2rem;">
-                 <a href="AI_Video_Interviewer.html" class="secondary-cta">New Interview</a>
-                 <a href="Dashboard.html" class="main-cta">Go to Dashboard</a>
+            <div id="report-actions" class="hidden"
+                style="margin-top: 3rem; display: flex; gap: 1rem; justify-content: center; padding-bottom: 2rem;">
+                <a href="AI_Video_Interviewer.html" class="secondary-cta">New Interview</a>
+                <a href="Dashboard.html" class="main-cta">Go to Dashboard</a>
             </div>
         </div>
     </div>
 
     <script type="module">
-        import { API_KEY } from '../env/config.js';
         // --- DOM Elements ---
         const screens = {
             start: document.getElementById('start-screen'),
@@ -188,8 +235,8 @@
         // Handle the "Start Over" button click
         navHomeBtn.addEventListener('click', (e) => {
             // Prevent the <a> tag's default navigation
-            e.preventDefault(); 
-            
+            e.preventDefault();
+
             // Force a full reload of the page. This is the simplest
             // and most reliable way to reset the entire application state,
             // stop media streams, clear timers, and return to the start screen.
@@ -206,7 +253,7 @@
         const timerEl = document.getElementById('timer');
         const interviewingFor = document.getElementById('interviewing-for');
         const voiceSelect = document.getElementById('voice-select');
-        
+
         // --- State ---
         let mediaStream = null;
         let recognition = null;
@@ -219,120 +266,118 @@
         let aiQuestionTime = null;
 
         // API Configuration - Updated
-        
-        console.log("Using API Key:", API_KEY ? "Loaded" : "Not Loaded");
-        const MODEL = "gemini-2.5-flash";
-        
+
+
 
         // --- Browser Voice Population ---
-            // --- Browser Voice Population (Edge-friendly, preserves selection) ---
-    const synth = window.speechSynthesis;
-    let selectedVoiceName = null; // persist the user's choice
+        // --- Browser Voice Population (Edge-friendly, preserves selection) ---
+        const synth = window.speechSynthesis;
+        let selectedVoiceName = null; // persist the user's choice
 
-    function populateVoiceList(retry = true) {
-        let voices = synth.getVoices();
+        function populateVoiceList(retry = true) {
+            let voices = synth.getVoices();
 
-        // Some browsers (Edge included) may return an empty array briefly.
-        if (voices.length === 0) {
-            if (retry) {
-                // try again shortly (one retry)
-                return setTimeout(() => populateVoiceList(false), 200);
+            // Some browsers (Edge included) may return an empty array briefly.
+            if (voices.length === 0) {
+                if (retry) {
+                    // try again shortly (one retry)
+                    return setTimeout(() => populateVoiceList(false), 200);
+                } else {
+                    // fallback: create a single default option
+                    voiceSelect.innerHTML = '';
+                    const fallback = document.createElement('option');
+                    fallback.textContent = "Default Device Voice";
+                    fallback.value = '';
+                    voiceSelect.appendChild(fallback);
+                    return;
+                }
+            }
+
+            // Sort and filter
+            voices.sort((a, b) => {
+                const aname = a.name.toUpperCase(), bname = b.name.toUpperCase();
+                if (aname < bname) return -1;
+                if (aname === bname) return 0;
+                return 1;
+            });
+
+            voiceSelect.innerHTML = '';
+
+            const englishVoices = voices.filter(v => v.lang && v.lang.startsWith('en'));
+            const list = englishVoices.length ? englishVoices : voices;
+
+            list.forEach((voice) => {
+                const option = document.createElement('option');
+                option.textContent = `${voice.name} (${voice.lang})`;
+                // store voice name as the value for reliable re-selection
+                option.value = voice.name;
+                option.setAttribute('data-lang', voice.lang);
+                option.setAttribute('data-name', voice.name);
+                voiceSelect.appendChild(option);
+            });
+
+            // If user previously selected a voice, re-select it
+            if (selectedVoiceName) {
+                // if the exact voice name exists, select it
+                const opt = Array.from(voiceSelect.options).find(o => o.value === selectedVoiceName);
+                if (opt) voiceSelect.value = selectedVoiceName;
             } else {
-                // fallback: create a single default option
-                voiceSelect.innerHTML = '';
-                const fallback = document.createElement('option');
-                fallback.textContent = "Default Device Voice";
-                fallback.value = '';
-                voiceSelect.appendChild(fallback);
-                return;
+                // initialize selectedVoiceName to the currently selected option
+                const firstOpt = voiceSelect.options[0];
+                if (firstOpt) selectedVoiceName = firstOpt.value || null;
             }
         }
 
-        // Sort and filter
-        voices.sort((a, b) => {
-            const aname = a.name.toUpperCase(), bname = b.name.toUpperCase();
-            if (aname < bname) return -1;
-            if (aname === bname) return 0;
-            return 1;
-        });
-
-        voiceSelect.innerHTML = '';
-
-        const englishVoices = voices.filter(v => v.lang && v.lang.startsWith('en'));
-        const list = englishVoices.length ? englishVoices : voices;
-
-        list.forEach((voice) => {
-            const option = document.createElement('option');
-            option.textContent = `${voice.name} (${voice.lang})`;
-            // store voice name as the value for reliable re-selection
-            option.value = voice.name;
-            option.setAttribute('data-lang', voice.lang);
-            option.setAttribute('data-name', voice.name);
-            voiceSelect.appendChild(option);
-        });
-
-        // If user previously selected a voice, re-select it
-        if (selectedVoiceName) {
-            // if the exact voice name exists, select it
-            const opt = Array.from(voiceSelect.options).find(o => o.value === selectedVoiceName);
-            if (opt) voiceSelect.value = selectedVoiceName;
-        } else {
-            // initialize selectedVoiceName to the currently selected option
-            const firstOpt = voiceSelect.options[0];
-            if (firstOpt) selectedVoiceName = firstOpt.value || null;
+        // ensure voices are loaded and populate once; handle the event too
+        populateVoiceList();
+        if ('onvoiceschanged' in speechSynthesis) {
+            speechSynthesis.onvoiceschanged = () => populateVoiceList();
         }
-    }
 
-    // ensure voices are loaded and populate once; handle the event too
-    populateVoiceList();
-    if ('onvoiceschanged' in speechSynthesis) {
-        speechSynthesis.onvoiceschanged = () => populateVoiceList();
-    }
+        // Persist user choice when they change the dropdown
+        voiceSelect.addEventListener('change', () => {
+            const selected = voiceSelect.value;
+            selectedVoiceName = selected || null;
+        });
 
-    // Persist user choice when they change the dropdown
-    voiceSelect.addEventListener('change', () => {
-        const selected = voiceSelect.value;
-        selectedVoiceName = selected || null;
-    });
+        // --- Browser TTS (use persistent selection) ---
+        function speakBrowser(text) {
+            // Cancel any ongoing speech
+            synth.cancel();
 
-    // --- Browser TTS (use persistent selection) ---
-    function speakBrowser(text) {
-        // Cancel any ongoing speech
-        synth.cancel();
+            aiSpeaking = true;
+            micStatus.textContent = "AI is speaking...";
 
-        aiSpeaking = true;
-        micStatus.textContent = "AI is speaking...";
+            const utter = new SpeechSynthesisUtterance(text);
+            const voices = synth.getVoices();
 
-        const utter = new SpeechSynthesisUtterance(text);
-        const voices = synth.getVoices();
-
-        // Prefer the stored voice name, fallback to a reasonable voice
-        if (selectedVoiceName) {
-            const found = voices.find(v => v.name === selectedVoiceName);
-            if (found) {
-                utter.voice = found;
+            // Prefer the stored voice name, fallback to a reasonable voice
+            if (selectedVoiceName) {
+                const found = voices.find(v => v.name === selectedVoiceName);
+                if (found) {
+                    utter.voice = found;
+                } else {
+                    // fallback: try to find an English voice with same lang
+                    utter.voice = voices.find(v => v.lang && v.lang.startsWith('en')) || null;
+                }
             } else {
-                // fallback: try to find an English voice with same lang
                 utter.voice = voices.find(v => v.lang && v.lang.startsWith('en')) || null;
             }
-        } else {
-            utter.voice = voices.find(v => v.lang && v.lang.startsWith('en')) || null;
+
+            utter.onend = () => {
+                aiSpeaking = false;
+                aiQuestionTime = performance.now();
+                setBusy(false);
+            };
+
+            utter.onerror = (e) => {
+                console.error("Browser TTS Error:", e);
+                aiSpeaking = false;
+                setBusy(false);
+            };
+
+            synth.speak(utter);
         }
-
-        utter.onend = () => {
-            aiSpeaking = false;
-            aiQuestionTime = performance.now();
-            setBusy(false);
-        };
-
-        utter.onerror = (e) => {
-            console.error("Browser TTS Error:", e);
-            aiSpeaking = false;
-            setBusy(false);
-        };
-
-        synth.speak(utter);
-    }
 
 
         // --- Initialization Check 
@@ -340,7 +385,7 @@
             // Check if dashboard asked us to view a specific report
             const viewReportId = sessionStorage.getItem('view_report_id');
             if (viewReportId) {
-                
+
                 sessionStorage.removeItem('view_report_id'); // Clear flag
                 loadAndShowReport(viewReportId);
             }
@@ -349,17 +394,17 @@
         function loadAndShowReport(reportId) {
             const history = JSON.parse(localStorage.getItem('ai_interviewer_data') || '[]');
             const report = history.find(r => r.id.toString() === reportId);
-            
+
             if (report) {
                 screens.start.classList.add('hidden');
                 screens.report.classList.remove('hidden');
                 // Show "Start Over" button so user can go back to main screen
-                navHomeBtn.style.visibility = 'visible'; 
-                
+                navHomeBtn.style.visibility = 'visible';
+
                 // Render the saved data without re-generating
                 document.getElementById('report-loader').classList.add('hidden');
                 renderReportData(report.metrics, report.feedback);
-                
+
                 // Show actions
                 document.getElementById('report-metrics').classList.remove('hidden');
                 document.getElementById('report-content').classList.remove('hidden');
@@ -465,7 +510,7 @@
             try {
                 mediaStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
                 cameraFeed.srcObject = mediaStream;
-                
+
                 if (!setupRecognition()) return;
 
                 screens.start.classList.add('hidden');
@@ -474,9 +519,9 @@
                 interviewingFor.textContent = `Role: ${role}`;
                 startTimer();
 
-                conversation = [{ 
-                    role: 'user', 
-                    parts: [{ text: `Start a interview session of a ${role} role. Be brief and professional and be polite and cheerful. Start with greeting and ask the candidate to introduce themselves. Don't introduce yourself` }] 
+                conversation = [{
+                    role: 'user',
+                    parts: [{ text: `Start a interview session of a ${role} role. Be brief and professional and be polite and cheerful. Start with greeting and ask the candidate to introduce themselves. Don't introduce yourself` }]
                 }];
                 metrics = []; // Reset metrics
                 await turnAI();
@@ -492,33 +537,39 @@
         async function turnAI() {
             setBusy(true);
             try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${API_KEY}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                const response = await fetch("/.netlify/functions/gemini", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
                     body: JSON.stringify({
                         contents: conversation,
-                        systemInstruction: { role: 'system', parts: [{ text: "You are a video interviewer. Ask 1 clear question at a time. Keep responses concise (under 2 sentences). Ask 6 questions total. Ask some questions about functions or interview questions. Check if the candidate answers question correct and if not, provide a brief correction." }] }
+                        systemInstruction: {
+                            role: "system",
+                            parts: [{
+                                text: "You are a video interviewer. Ask 1 clear question at a time. Keep responses concise (under 2 sentences). Ask 6 questions total. Ask some questions about functions or interview questions. Check if the candidate answers correctly and if not, provide a brief correction."
+                            }]
+                        }
                     })
                 });
-                
+
                 if (!response.ok) {
                     const errorText = await response.text();
-                    console.error('API Error:', response.status, errorText);
-                    throw new Error(`API returned ${response.status}: ${errorText}`);
+                    throw new Error(errorText);
                 }
-                
+
                 const data = await response.json();
-                
+
                 if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
                     console.error('Invalid API response:', data);
                     throw new Error('Invalid response from AI');
                 }
-                
+
                 const aiText = data.candidates[0].content.parts[0].text;
-                
+
                 conversation.push({ role: 'model', parts: [{ text: aiText }] });
                 addChatBubble('ai', aiText);
-                
+
                 // Always use browser TTS now
                 speakBrowser(aiText);
 
@@ -528,61 +579,61 @@
                 setBusy(false);
             }
         }
-    
+
         function disableSpeaking() {
-    // REMOVE mic + skip buttons from the page completely
-    const skipBtn = document.getElementById('skip-btn');
-    const micBtn = document.getElementById('mic-btn');
+            // REMOVE mic + skip buttons from the page completely
+            const skipBtn = document.getElementById('skip-btn');
+            const micBtn = document.getElementById('mic-btn');
 
-    if (skipBtn) skipBtn.remove();
-    if (micBtn) micBtn.remove();
+            if (skipBtn) skipBtn.remove();
+            if (micBtn) micBtn.remove();
 
-    // Stop speech recognition & TTS
-    try {
-        if (recognition) {
-            recognition.onend = null;
-            recognition.stop();
+            // Stop speech recognition & TTS
+            try {
+                if (recognition) {
+                    recognition.onend = null;
+                    recognition.stop();
+                }
+            } catch (e) { }
+
+            try {
+                speechSynthesis.cancel();
+            } catch (e) { }
+
+            // Update status text location (mic-status stays visible)
+            micStatus.textContent = "Interview complete — click End";
         }
-    } catch (e) {}
-
-    try {
-        speechSynthesis.cancel();
-    } catch (e) {}
-
-    // Update status text location (mic-status stays visible)
-    micStatus.textContent = "Interview complete — click End";
-}
 
 
         function handleUserAnswer(text) {
-    if (!text) return;
+            if (!text) return;
 
-    const now = performance.now();
-    const responseTime = aiQuestionTime ? ((now - aiQuestionTime) / 1000).toFixed(1) : 0;
-    const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+            const now = performance.now();
+            const responseTime = aiQuestionTime ? ((now - aiQuestionTime) / 1000).toFixed(1) : 0;
+            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
 
-    // record performance metrics
-    metrics.push({ text, responseTime, words });
+            // record performance metrics
+            metrics.push({ text, responseTime, words });
 
-    // show answer in chat + save transcript
-    conversation.push({ role: 'user', parts: [{ text: text }] });
-    addChatBubble('user', text);
+            // show answer in chat + save transcript
+            conversation.push({ role: 'user', parts: [{ text: text }] });
+            addChatBubble('user', text);
 
-    // STOP AFTER 10 QUESTIONS
-    if (metrics.length >= 10) {
-        disableSpeaking();
-        return;
-    }
+            // STOP AFTER 10 QUESTIONS
+            if (metrics.length >= 10) {
+                disableSpeaking();
+                return;
+            }
 
-    // continue interview
-    turnAI();
-}
+            // continue interview
+            turnAI();
+        }
         // --- UI helpers ---
-  function setBusy(busy) {
-    micBtn.disabled = busy;
-    document.getElementById('skip-btn').disabled = busy;
-    if (!busy) micStatus.textContent = "Tap to speak";
-  } 
+        function setBusy(busy) {
+            micBtn.disabled = busy;
+            document.getElementById('skip-btn').disabled = busy;
+            if (!busy) micStatus.textContent = "Tap to speak";
+        }
 
         function addChatBubble(role, text) {
             const div = document.createElement('div');
@@ -616,16 +667,16 @@
         });
 
         document.getElementById('skip-btn').addEventListener('click', () => {
-    conversation.push({ role: 'user', parts: [{ text: "[User skipped this question]" }] });
-    addChatBubble('system', 'Skipped question');
-    // count skip as an answered question (if desired). If you DON'T want skip to count, remove the next two lines.
-    metrics.push({ text: "[skipped]", responseTime: 0, words: 0 });
-    if (metrics.length >= 10) {
-      disableSpeaking();
-      return;
-    }
-    turnAI();
-  });
+            conversation.push({ role: 'user', parts: [{ text: "[User skipped this question]" }] });
+            addChatBubble('system', 'Skipped question');
+            // count skip as an answered question (if desired). If you DON'T want skip to count, remove the next two lines.
+            metrics.push({ text: "[skipped]", responseTime: 0, words: 0 });
+            if (metrics.length >= 6) {
+                disableSpeaking();
+                return;
+            }
+            turnAI();
+        });
 
         document.getElementById('end-btn').addEventListener('click', () => {
             stopInterview();
@@ -637,25 +688,26 @@
         // --- AI Feedback Generation ---
         async function getAIFeedback(conversationHistory, role) {
             const transcript = conversationHistory.map(t => `${t.role === 'model' ? 'Interviewer' : 'Candidate'}: ${t.parts[0].text}`).join('\n\n');
-            
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${API_KEY}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+
+            const response = await fetch("/.netlify/functions/gemini", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
                 body: JSON.stringify({
                     contents: [{
-                        role: 'user',
-                        parts: [{ text: `
+                        role: "user",
+                        parts: [{
+                            text: `
                             Act as an expert interview coach. Based on the following transcript for a ${role} role, provide a structured feedback report.
                             Use standard HTML tags for formatting: <h3> for section headers, <ul>/<li> for bullet points, and <p> for paragraphs. Do not use markdown.
-                            
                             Required sections:
                             1. <h3>Performance Summary</h3> (A brief, encouraging overview)
                             2. <h3>Key Strengths</h3> (3-4 specific bullet points based on their answers)
                             3. <h3>Areas for Improvement</h3> (3-4 actionable tips for next time)
-
                             Transcript:
-                            ${transcript}
-                        `}]
+                            ${transcript}`
+                        }]
                     }]
                 })
             });
@@ -665,31 +717,31 @@
 
         // --- UPDATED: Dynamic Report Generation & Saving ---
         async function generateReport() {
-             const durationStr = timerEl.textContent;
-             const qCount = metrics.length;
-             const avgResponse = qCount > 0 ? (metrics.reduce((a,b)=>a+parseFloat(b.responseTime),0)/qCount).toFixed(1) : "0.0";
-             const totalWords = metrics.reduce((a, b) => a + b.words, 0);
+            const durationStr = timerEl.textContent;
+            const qCount = metrics.length;
+            const avgResponse = qCount > 0 ? (metrics.reduce((a, b) => a + parseFloat(b.responseTime), 0) / qCount).toFixed(1) : "0.0";
+            const totalWords = metrics.reduce((a, b) => a + b.words, 0);
 
-             const metricData = { duration: durationStr, qCount, avgResponse, totalWords };
+            const metricData = { duration: durationStr, qCount, avgResponse, totalWords };
 
-             try {
-                 const feedbackHTML = await getAIFeedback(conversation, jobInput.value);
-                 
-                 // Render results
-                 renderReportData(metricData, feedbackHTML);
+            try {
+                const feedbackHTML = await getAIFeedback(conversation, jobInput.value);
 
-                 // Auto-save to browser history for the Dashboard
-                 saveReportToHistory(jobInput.value, metricData, feedbackHTML);
+                // Render results
+                renderReportData(metricData, feedbackHTML);
 
-             } catch (e) {
-                 console.error("Report generation error:", e);
-                 document.getElementById('report-content').innerHTML = `<p style="color: var(--danger); text-align: center;">Could not generate full AI feedback due to an error. Please try again.</p>`;
-             } finally {
-                 document.getElementById('report-loader').classList.add('hidden');
-                 document.getElementById('report-metrics').classList.remove('hidden');
-                 document.getElementById('report-content').classList.remove('hidden');
-                 document.getElementById('report-actions').classList.remove('hidden');
-             }
+                // Auto-save to browser history for the Dashboard
+                saveReportToHistory(jobInput.value, metricData, feedbackHTML);
+
+            } catch (e) {
+                console.error("Report generation error:", e);
+                document.getElementById('report-content').innerHTML = `<p style="color: var(--danger); text-align: center;">Could not generate full AI feedback due to an error. Please try again.</p>`;
+            } finally {
+                document.getElementById('report-loader').classList.add('hidden');
+                document.getElementById('report-metrics').classList.remove('hidden');
+                document.getElementById('report-content').classList.remove('hidden');
+                document.getElementById('report-actions').classList.remove('hidden');
+            }
         }
 
         function renderReportData(m, feedback) {
@@ -717,4 +769,5 @@
         }
     </script>
 </body>
+
 </html>
