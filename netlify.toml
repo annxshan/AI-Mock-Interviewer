@@ -1,2 +1,3 @@
 [build]
   publish = "HTML"
+  functions = "netlify/functions"
