@@ -502,16 +502,74 @@
             showPrivacyModal();
         });
 
+        // Explain why getUserMedia failed instead of always blaming permissions
+        function describeMediaError(err) {
+            switch (err && err.name) {
+                case 'NotAllowedError':
+                case 'SecurityError':
+                    return "Camera/Mic access is blocked. Click the camera icon in the address bar, allow access, then reload the page. Also check your system privacy settings allow the browser to use the camera and microphone.";
+                case 'NotReadableError':
+                case 'TrackStartError':
+                case 'AbortError':
+                    return "Your camera or microphone is being used by another app (e.g. Zoom, Teams, another tab). Close it and try again.";
+                case 'NotFoundError':
+                case 'DevicesNotFoundError':
+                    return "No camera or microphone was found. Please connect a device and try again.";
+                case 'OverconstrainedError':
+                    return "Your camera does not support the requested settings. Please try another camera.";
+                default:
+                    return `Could not access camera/mic${err && err.message ? `: ${err.message}` : '.'}`;
+            }
+        }
+
+        // Errors where retrying with fewer devices might succeed
+        const RECOVERABLE_MEDIA_ERRORS = ['NotFoundError', 'DevicesNotFoundError', 'NotReadableError', 'TrackStartError', 'AbortError', 'OverconstrainedError'];
+
+        async function acquireMedia() {
+            if (!window.isSecureContext || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                const e = new Error("Camera access requires a secure (https) page in a supported browser.");
+                e.name = 'SecurityError';
+                throw e;
+            }
+            try {
+                return await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+            } catch (err) {
+                if (!RECOVERABLE_MEDIA_ERRORS.includes(err.name)) throw err;
+                // One device may be missing or busy — fall back to whichever works
+                for (const constraints of [{ audio: true }, { video: true }]) {
+                    try {
+                        return await navigator.mediaDevices.getUserMedia(constraints);
+                    } catch (_) { }
+                }
+                throw err;
+            }
+        }
+
         async function requestPermissionsAndStart() {
             const role = jobInput.value.trim();
+            permMsg.textContent = "Waiting for camera and microphone permissions...";
+            permMsg.style.color = 'var(--text-light)';
             permMsg.style.display = 'block';
             startBtn.disabled = true;
 
             try {
-                mediaStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-                cameraFeed.srcObject = mediaStream;
+                mediaStream = await acquireMedia();
+            } catch (err) {
+                console.error("Media access error:", err);
+                permMsg.textContent = "Error: " + describeMediaError(err);
+                permMsg.style.color = 'var(--danger)';
+                startBtn.disabled = false;
+                return;
+            }
 
-                if (!setupRecognition()) return;
+            cameraFeed.srcObject = mediaStream;
+            cameraFeed.play().catch(() => { });
+
+            try {
+                if (!setupRecognition()) {
+                    startBtn.disabled = false;
+                    return;
+                }
 
                 screens.start.classList.add('hidden');
                 screens.interview.classList.remove('hidden');
@@ -527,10 +585,9 @@
                 await turnAI();
 
             } catch (err) {
-                console.error("Media access error:", err);
-                permMsg.textContent = "Error: Camera/Mic access denied. Please allow access.";
-                permMsg.style.color = 'var(--danger)';
-                startBtn.disabled = false;
+                console.error("Interview start error:", err);
+                addChatBubble('ai', "Something went wrong starting the interview. Please try again.");
+                setBusy(false);
             }
         }
 
